@@ -39,11 +39,15 @@ anthropic_key = os.getenv("ANTHROPIC_API_KEY")
 
 # Hugging Face Sentiment Analysis
 def analyze_sentiment_hf(convo):
+    # have not supplied a mdel name, so it will use the default model
+    print("inside hugging face function")
     sentiment_pipeline = pipeline("sentiment-analysis")
     results = sentiment_pipeline(convo[:512])  # Hugging Face models have token limits
     sentiment = results[0]["label"]
     score = results[0]["score"]
+    print("score: ", score)
 
+    print("analyzing sentiment via hugging face")
     if sentiment == "POSITIVE":
         return {"Positive": score * 100, "Neutral": 100 - score * 100, "Negative": 0}
     elif sentiment == "NEGATIVE":
@@ -64,8 +68,8 @@ def analyze_sentiment_google(convo):
 
     return {"Positive": positive, "Neutral": neutral, "Negative": negative}
 
-# OpenAI GPT-4o-mini for Issue Detection
-def analyze_issues_gpt(convo):
+# Cohere api for Issue Detection
+def analyze_issues_cohere(convo):
     co = cohere.Client(cohere_key)
     response = co.generate(
         model="command-r-plus", 
@@ -73,8 +77,8 @@ def analyze_issues_gpt(convo):
         max_tokens=500
     )
 
-    print("RESPONSE AAAH \n", response)
-    print("RESPONSE generation \n", response.generations[0].text)
+    # print("RESPONSE AAAH \n", response)
+    # print("RESPONSE generation \n", response.generations[0].text)
     
     issue_analysis = response.generations[0].text.strip()  # Ensure no leading/trailing whitespace
     return issue_analysis
@@ -94,31 +98,20 @@ def analyze_conversation(convo, name, partner_name, relationship, use_google_nlp
     # Sentiment Analysis (Choose Hugging Face or Google Cloud)
     sentiment = analyze_sentiment_google(convo) if use_google_nlp else analyze_sentiment_hf(convo)
 
-    # Issue Detection (Choose GPT-4-turbo or Claude)
-    issue_analysis = analyze_issues_claude(convo) if use_claude else analyze_issues_gpt(convo)
-    print("issue analysis in big func: \n", issue_analysis)
+    # Issue Detection (Choose cohere or Claude)
+    issue_analysis = analyze_issues_claude(convo) if use_claude else analyze_issues_cohere(convo)
+    # print("issue analysis in big func: \n", issue_analysis)
     
 
-    # Parse issue analysis output (assuming JSON-like structure from GPT/Claude)
+    # Parse issue analysis output (assuming JSON-like structure from cohere/Claude)
     import json
     try:
-        print("in try block") # Debugging statement
-
-        
         issues = json.loads(issue_analysis)
-        #print(issues)
-        print("ISSUES in try \n", issues)
         
     except json.JSONDecodeError as e:
-        print("JSONDecodeError occurred:", e)
         issues = {"Gaslighting": 0, "Passive Aggression": 0, "Stonewalling": 0, "Defensive Behavior": 0}
     except Exception as e:
-        print("Exception occurred:", e)
         issues = {"Gaslighting": 0, "Passive Aggression": 0, "Stonewalling": 0, "Defensive Behavior": 0}
-
-    #print("ISSUES in big funcion", issues)
-    # print("out of try/except")
-    
     # Compute Conversation Health Score
     health_score = 50 + (sentiment["Positive"] - sentiment["Negative"]) * 10 - (sum(issues.values()) * 5)
     health_score = max(0, min(100, health_score))
