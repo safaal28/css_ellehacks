@@ -6,9 +6,6 @@ import anthropic
 import streamlit as st
 import cohere
 
-
-
-
 import os
 from dotenv import load_dotenv
 
@@ -17,24 +14,6 @@ load_dotenv()
 cohere_key= os.getenv("COHERE_API_KEY")
 print("cohere key", cohere_key)
 
-# openai_key = os.getenv("OPENAI_API_KEY")
-# print("open ai key", openai_key)
-
-google_key = os.getenv("GOOGLE_CLOUD_API_KEY")
-# print("google cloud key", openai_key)
-anthropic_key = os.getenv("ANTHROPIC_API_KEY")
-# print("anthropic key", openai_key)
-
-# if not openai_key:
-#     raise ValueError("Error: OpenAI API key is missing!")
-
-# if not google_key:
-#     raise ValueError("Error: Google Cloud API key is missing!")
-
-# if not anthropic_key:
-#     raise ValueError("Error: Anthropic API key is missing!")
-
-# client = OpenAI(api_key=openai_key)
 
 
 # Hugging Face Sentiment Analysis
@@ -83,42 +62,35 @@ def analyze_issues_cohere(convo):
     issue_analysis = response.generations[0].text.strip()  # Ensure no leading/trailing whitespace
     return issue_analysis
 
-# Anthropic Claude for Issue Detection
-def analyze_issues_claude(convo):
-    client = anthropic.Anthropic(api_key=anthropic_key)
-    response = client.messages.create(
-        model="claude-3",
-        max_tokens=500,
-        messages=[{"role": "user", "content": f"Analyze this conversation for relationship issues: {convo}"}]
-    )
-    return response.content
+
 
 # Main Analysis Function
-def analyze_conversation(convo, name, partner_name, relationship, use_google_nlp=False, use_claude=False):
+def analyze_conversation(convo, name, partner_name, relationship):
     # Sentiment Analysis (Choose Hugging Face or Google Cloud)
-    sentiment = analyze_sentiment_google(convo) if use_google_nlp else analyze_sentiment_hf(convo)
+    sentiment = analyze_sentiment_hf(convo)
 
     # Issue Detection (Choose cohere or Claude)
-    issue_analysis = analyze_issues_claude(convo) if use_claude else analyze_issues_cohere(convo)
-    # print("issue analysis in big func: \n", issue_analysis)
-    print("issue analysis in big func: \n", issue_analysis)
+    issue_analysis = analyze_issues_cohere(convo)
+    print("Raw issue analysis response: \n", issue_analysis)  # Add this line for debugging
 
     # Parse issue analysis output (assuming JSON-like structure from cohere/Claude)
     import json
     try:
         issues = json.loads(issue_analysis)
-        print("try issues: ", issues)
+        print("Parsed issues: ", issues)
         
     except json.JSONDecodeError as e:
+        print("JSONDecodeError: ", e)  # Add this line for debugging
         issues = {"Gaslighting": 0, "Passive Aggression": 0, "Stonewalling": 0, "Defensiveness": 0}
     except Exception as e:
+        print("Exception: ", e)  # Add this line for debugging
         issues = {"Gaslighting": 0, "Passive Aggression": 0, "Stonewalling": 0, "Defensiveness": 0}
         
-    print("issues: ", issues)
+    print("Issues: ", issues)
     # Compute Conversation Health Score
     health_score = 50 + (sentiment["Positive"] - sentiment["Negative"]) * 10 - (sum(issues.values()) * 5)
-    print("health score: ", health_score)
-    print("sum of values", sum(issues.values()) * 5)
+    print("Health score: ", health_score)
+    print("Sum of values: ", sum(issues.values()) * 5)
     health_score = max(0, min(100, health_score))
 
     # Communication Style Classification

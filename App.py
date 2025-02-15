@@ -32,12 +32,9 @@ partner_name = st.text_input("Partner's Name")
 relationship_type = st.selectbox("Relationship Type", ["Romantic", "Family", "Friend", "Colleague"])
 conversation = st.text_area("Paste your conversation here")
 
-# Select LLMs
-use_google_nlp = st.checkbox("Use Google Cloud NLP for Sentiment (Default: Hugging Face)")
-use_claude = st.checkbox("Use Claude for Issue Detection (Default: GPT-4)")
 
 if st.button("Analyze Conversation"):
-    results = analyze_conversation(conversation, name, partner_name, relationship_type, use_google_nlp, use_claude)
+    results = analyze_conversation(conversation, name, partner_name, relationship_type)
 
     # Display Report
     st.subheader("Conversation Analysis Report")
