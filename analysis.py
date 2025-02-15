@@ -101,19 +101,24 @@ def analyze_conversation(convo, name, partner_name, relationship, use_google_nlp
     # Issue Detection (Choose cohere or Claude)
     issue_analysis = analyze_issues_claude(convo) if use_claude else analyze_issues_cohere(convo)
     # print("issue analysis in big func: \n", issue_analysis)
-    
+    print("issue analysis in big func: \n", issue_analysis)
 
     # Parse issue analysis output (assuming JSON-like structure from cohere/Claude)
     import json
     try:
         issues = json.loads(issue_analysis)
+        print("try issues: ", issues)
         
     except json.JSONDecodeError as e:
-        issues = {"Gaslighting": 0, "Passive Aggression": 0, "Stonewalling": 0, "Defensive Behavior": 0}
+        issues = {"Gaslighting": 0, "Passive Aggression": 0, "Stonewalling": 0, "Defensiveness": 0}
     except Exception as e:
-        issues = {"Gaslighting": 0, "Passive Aggression": 0, "Stonewalling": 0, "Defensive Behavior": 0}
+        issues = {"Gaslighting": 0, "Passive Aggression": 0, "Stonewalling": 0, "Defensiveness": 0}
+        
+    print("issues: ", issues)
     # Compute Conversation Health Score
     health_score = 50 + (sentiment["Positive"] - sentiment["Negative"]) * 10 - (sum(issues.values()) * 5)
+    print("health score: ", health_score)
+    print("sum of values", sum(issues.values()) * 5)
     health_score = max(0, min(100, health_score))
 
     # Communication Style Classification
