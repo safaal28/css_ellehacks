@@ -146,4 +146,4 @@ wcwidth==0.2.13
 websockets==13.0.1
 Werkzeug==3.0.1
 wrapt==1.17.2
-python-dotenv==1.0.1  # Replace with your installed version
+dotenv==1.0.1  # Replace with your installed version
