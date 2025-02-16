@@ -6,9 +6,10 @@ import seaborn as sns
 import json
 import os
 from dotenv import load_dotenv
+from transcription import transcribe_audio
+from pii_redact import redact_names_nltk
 os.environ["STREAMLIT_CONFIG_DIR"] = os.path.join(os.getcwd(), ".streamlit")
 
-from transcription import transcribe_audio
 
 def load_environment_variables():
     """
@@ -41,7 +42,7 @@ def read_message_file(file_path):
         file_path (str): The path to the message file.
 
     Returns:
-        str: The content of the message file.
+        str: The content of the message file (input_text).
     """
     if os.path.exists(file_path):
         with open(file_path, "r", encoding="utf-8") as file:
