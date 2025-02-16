@@ -4,6 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import json
+from transcription import transcribe_audio
 
 import os
 from dotenv import load_dotenv
@@ -19,11 +20,21 @@ co = cohere.Client(COHERE_API_KEY)
 
 # Create UI
 st.set_page_config(page_title="Conversation Insights", layout="wide")
-
 st.title("Delulu Detector Demo")
 
+# Audio Upload
+uploaded_audio = st.file_uploader("Upload an audio file (MP3, WAV, M4A)", type=["mp3", "wav", "m4a"]) 
+
 # User Inputs
-conversation_text = st.text_area("Paste the conversation here:", height=200)
+conversation_text = st.text_area("Conversation transcript", height=200)
+
+# if conversation_text:
+#     results = analyze_conversation(conversation, name, partner_name, relationship_type)
+# else:
+#     results = analyze_conversation(transcript, name, partner_name, relationship_type)
+# conversation_text = transcribe_audio(uploaded_audio)
+
+
 person_name = st.text_input("Person's Name")
 relationship_type = st.selectbox("Relationship Type", ["Situationship", "Partner", "Friend", "Parent"])
 
@@ -68,10 +79,6 @@ if st.button("Generate Insights"):
                 temperature=0.7
             )
 
-            # print("RESPONSE: ", response.generations[0].text)
-
-            # st.write(response.generations[0].text)
-
             try:
                 insights = json.loads(response.generations[0].text)
             except json.JSONDecodeError as e:
@@ -103,4 +110,4 @@ if st.button("Generate Insights"):
                 st.write(f"- {green_flag}")
 
 
-st.button("Print Report", on_click=lambda: st.write("Use your browser's print function (Ctrl+P)."))
+    st.button("Print Report", on_click=lambda: st.write("Use your browser's print function (Ctrl+P)."))
