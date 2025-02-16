@@ -177,7 +177,6 @@ def main():
                 print(response_text)  # Debugging step
                 display_results(insights)
 
-        st.button("Print Report", on_click=lambda: st.write("Use your browser's print function (Ctrl+P)."))
 
 if __name__ == "__main__":
     main()
