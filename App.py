@@ -2,6 +2,7 @@ import streamlit as st
 from analysis import analyze_conversation
 from report import display_report
 from dotenv import load_dotenv
+from transcription import transcribe_audio
 
 # Load environment variables
 load_dotenv()
@@ -13,10 +14,17 @@ name = st.text_input("Your Name")
 partner_name = st.text_input("Partner's Name")
 relationship_type = st.selectbox("Relationship Type", ["Romantic", "Family", "Friend", "Colleague"])
 conversation = st.text_area("Paste your conversation here")
-
+# Audio Upload
+uploaded_audio = st.file_uploader("Upload an audio file (MP3, WAV, M4A)", type=["mp3", "wav", "m4a"])
 
 if st.button("Analyze Conversation"):
-    results = analyze_conversation(conversation, name, partner_name, relationship_type)
+    transcript = transcribe_audio(uploaded_audio)
+    #print("conversation \n", conversation)
+    
+    if conversation:
+        results = analyze_conversation(conversation, name, partner_name, relationship_type)
+    else:
+        results = analyze_conversation(transcript, name, partner_name, relationship_type)
 
     # Display Report
     st.subheader("Conversation Analysis Report")
