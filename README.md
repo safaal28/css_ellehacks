@@ -57,7 +57,21 @@ We created synthetic data to perform semi-automated, qualitative testing of our 
 | 3       | 5      | 60%           | This conversation demonstrates healthy communication. Both parties are open, receptive, and willing to find solutions. |	Secure |	Open, Collaborative	| Dominant speaker: Mia, empathetic responses, solution-oriented | None	| Active listening, willingness to resolve, setting future intentions
 
 ### Secure Use of GenAI
+We used Spacy's NER model to detect names in conversations and redact them before it gets sent to the LLM to ensure user data is kept safe.
 
+Sample Input
+```
+John: Hey, Emma, how have you been?
+Emma: I’ve been good, just busy with work. Any plans for the weekend?
+John: Glad to hear. I'm gonna hit up the golf course with Dominic tomorrow.
+```
+
+Sample Output
+```
+Person a: Hey, REDACTED_NAME, how have you been?
+Person b: I’ve been good, just busy with work. Any plans for the weekend?
+Person a: Glad to hear. I'm gonna hit up the golf course with REDACTED_NAME tomorrow.
+```
 
 ## Future Roadmap
 - [ ] GenAI: Fine-tune Cohere's R Command Plus model with synthetic data for more accurate sentiment analysis
