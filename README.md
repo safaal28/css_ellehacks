@@ -2,7 +2,7 @@
 # Delulu Detector ❤️
 ![3](https://github.com/user-attachments/assets/77cb78f9-f9a0-48b4-8dfc-dda3a0e7c9df)
 
-### The Solulu to Your Delulu
+### We listen and we don't judge.
 Delulu Detector is a **Streamlit-based AI app** that helps individuals analyze their conversations for red flags, unhealthy patterns, and communication styles. It provides insights into **attachment styles, communication patterns**, and **conflicts** to promote healthier relationships among their romantic interests, siblings, parents, friends, and more.
 
 ## Features
