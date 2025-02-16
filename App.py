@@ -26,6 +26,6 @@ if st.button("Analyze Conversation"):
     st.write("### Detected Issues")
     st.json(results["issues_detected"])
     st.write(f"### Communication Style: {results['communication_style']}")
-    st.write("### Therapist Recommendations")
+    st.write("### Potential Discussion Topics for Therapy")
     for rec in results["therapist_recommendations"]:
         st.write(f"- {rec}")
