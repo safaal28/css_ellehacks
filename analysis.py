@@ -1,8 +1,6 @@
 from transformers import pipeline
 from google.cloud import language_v1
-from openai import OpenAI
 import os
-import anthropic
 import streamlit as st
 import cohere
 
@@ -50,19 +48,33 @@ def analyze_sentiment_google(convo):
 # Cohere api for Issue Detection
 def analyze_issues_cohere(convo):
     co = cohere.Client(cohere_key)
-    response = co.generate(
-        model="command-r-plus", 
-        prompt=f"Analyze this conversation for relationship issues such as Gaslighting, Passive Aggression, Stonewalling, and Defensiveness. Only return counts of each issue in JSON format:\n\n{convo}. Use exact key names.",
-        max_tokens=500
-    )
-
-    # print("RESPONSE AAAH \n", response)
-    # print("RESPONSE generation \n", response.generations[0].text)
     
-    issue_analysis = response.generations[0].text.strip()  # Ensure no leading/trailing whitespace
-    return issue_analysis
+    try:
+        response = co.generate(
+            model="command-r-plus", 
+            prompt=f"Analyze this conversation for relationship issues such as Gaslighting, Passive Aggression, Stonewalling, and Defensiveness. Only return counts of each issue in JSON format:\n\n{convo}. Use exact key names.",
+            max_tokens=500
+        )
 
+        if not response.generations or not response.generations[0].text:
+            raise ValueError("Empty response from Cohere API")
 
+        issue_analysis = response.generations[0].text.strip()  # Ensure no leading/trailing whitespace
+        print("Issue analysis text: \n", issue_analysis)  # Add this line for debugging
+
+        # Attempt to parse the JSON response
+        import json
+        issues = json.loads(issue_analysis)
+        print("Parsed issues: ", issues)
+        return issues
+
+    except json.JSONDecodeError as e:
+        print("JSONDecodeError: ", e)  # Add this line for debugging
+        return {"Gaslighting": 0, "Passive Aggression": 0, "Stonewalling": 0, "Defensiveness": 0}
+    except Exception as e:
+        print("Exception: ", e)  # Add this line for debugging
+        return {"Gaslighting": 0, "Passive Aggression": 0, "Stonewalling": 0, "Defensiveness": 0}
+    
 
 # Main Analysis Function
 def analyze_conversation(convo, name, partner_name, relationship):
