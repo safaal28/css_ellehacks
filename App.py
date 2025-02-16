@@ -156,7 +156,7 @@ def main():
     # User Inputs
     conversation_text = st.text_area("Conversation transcript", value=message_content, height=200)
     person_name = st.text_input("Person's Name")
-    relationship_type = st.selectbox("Relationship Type", ["Situationship", "Partner", "Friend", "Parent"])
+    relationship_type = st.selectbox("Relationship Type", ["Friend", "Situationship", "Partner", "Parent"])
 
     if st.button("Generate Insights"):
         if not conversation_text and not person_name:
