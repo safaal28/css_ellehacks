@@ -4,6 +4,8 @@
 
 Delulu Detector is a **Streamlit-based AI app** that helps individuals analyze their conversations for red flags, unhealthy patterns, and communication styles. It provides insights into **attachment styles, communication patterns**, and **conflicts** to promote healthier relationships among their romantic interests, siblings, parents, and friends. 
 
+<img width="999" alt="Screenshot 2025-02-16 at 2 38 41 AM" src="https://github.com/user-attachments/assets/4ea0e9e3-c01d-49ee-83e8-95e8acdb4459" />
+
 ---
 
 ## 🚀 Features
