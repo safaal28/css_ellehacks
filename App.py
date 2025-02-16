@@ -7,7 +7,7 @@ import json
 import os
 from dotenv import load_dotenv
 from transcription import transcribe_audio
-from pii_redact import redact_names_nltk
+# from pii_redact import redact_names_nltk
 os.environ["STREAMLIT_CONFIG_DIR"] = os.path.join(os.getcwd(), ".streamlit")
 
 
