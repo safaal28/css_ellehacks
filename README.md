@@ -54,7 +54,7 @@ We created synthetic data to perform semi-automated, qualitative testing of our 
 |---------|--------|---------------|-----------------------------|------------------|----------------------|-----------------------|-----------|------------|
 | 1       | 5      | 80%           | This relationship exhibits emotional neglect. Seeking therapy is advised. | Anxious-Preoccupied | Passive-Aggressive | Dominant speaker: Jason, frequent dismissive responses | Gaslighting, stonewalling | Apologizes, attempt at clarity |
 | 2       | 5      | 100%          | The conversation reflects a significant communication gap. Both parties are defensive, leading to emotional invalidation. | Anxious-Preoccupied	| Deflective, Defensive	| Dominant speaker: Parent, avoidance of deeper issues| Emotional invalidation, guilt-tripping, defensiveness	| Attempts to initiate communication, verbalized feelings of being unheard
-| 3       | 5      | 60%           | This conversation demonstrates healthy communication. Both parties are open, receptive, and willing to find solutions. |	Secure |	Open, Collaborative	| Dominant speaker: Mia, empathetic responses, solution-oriented | None	| Active listening, willingness to resolve, setting future intentions
+| 3       | 5      | 100%           | This conversation demonstrates healthy communication. Both parties are open, receptive, and willing to find solutions. |	Secure |	Open, Collaborative	| Dominant speaker: Mia, empathetic responses, solution-oriented | None	| Active listening, willingness to resolve, setting future intentions
 
 ### Secure Use of GenAI
 We used Spacy's NER model to detect names in conversations and redact them before it gets sent to the LLM to ensure user data is kept safe.
