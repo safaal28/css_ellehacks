@@ -18,7 +18,7 @@ Delulu Detector is a **Streamlit-based AI app** that helps individuals analyze t
 ## How the App Works
 
 1️⃣ **Speech-to-Text**: Converts recorded conversations into text using AssemblyAI and identifies each speaker  
-2️⃣ **Text Preprocessing**: Cleans and tokenizes text using SpaCy, redacts PII such as names  
+2️⃣ **Text Preprocessing**: Cleans and tokenizes text using the NLTK, redacts PII such as names  
 3️⃣ **Relationship Analysis**: Applies Cohere's Command R Plus model to identify attachment style, communication style, red and green flags  
 4️⃣ **Results Output**: Exports findings as a PDF to share and disucss with their therapist  
 5️⃣ **Observe Long-term Trends**: Compare relationship trends and reoccurring patterns over multiple conversations  
