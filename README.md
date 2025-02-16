@@ -49,10 +49,10 @@ streamlit run App.py
 ## Technical Considerations
 
 ### Accuracy Testing
-We created synthetic data to perform semi-automated, qualitative testing of our results based on 5 types of conversations. Each conversation was tested 5 times. Findings are displayed as follows:
+We created synthetic data to perform semi-automated, qualitative testing of our results based on 3 types of relationship styles. Each conversation was tested 5 times. Findings are displayed as follows:
 | Input # | # of Trials | Score out of 5 | Conversation Health Summary | Attachment Style | Communication Pattern | Communication Insights | Red Flags | Green Flags |
 |---------|--------|---------------|-----------------------------|------------------|----------------------|-----------------------|-----------|------------|
-| 1       | 5      | 80%           | This relationship exhibits emotional neglect. Seeking therapy is advised. | Anxious-Preoccupied | Passive-Aggressive | Dominant speaker: Jason, frequent dismissive responses | Gaslighting, stonewalling | Apologies, attempt at clarity |
+| 1       | 5      | 80%           | This relationship exhibits emotional neglect. Seeking therapy is advised. | Anxious-Preoccupied | Passive-Aggressive | Dominant speaker: Jason, frequent dismissive responses | Gaslighting, stonewalling | Apologizes, attempt at clarity |
 | 2       | 5      | 100%          | The conversation reflects a significant communication gap. Both parties are defensive, leading to emotional invalidation. | Anxious-Preoccupied	| Deflective, Defensive	| Dominant speaker: Parent, avoidance of deeper issues| Emotional invalidation, guilt-tripping, defensiveness	| Attempts to initiate communication, verbalized feelings of being unheard
 | 3       | 5      | 60%           | This conversation demonstrates healthy communication. Both parties are open, receptive, and willing to find solutions. |	Secure |	Open, Collaborative	| Dominant speaker: Mia, empathetic responses, solution-oriented | None	| Active listening, willingness to resolve, setting future intentions
 
