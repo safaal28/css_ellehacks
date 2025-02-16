@@ -6,6 +6,8 @@ import seaborn as sns
 import json
 import os
 from dotenv import load_dotenv
+os.environ["STREAMLIT_CONFIG_DIR"] = os.path.join(os.getcwd(), ".streamlit")
+
 from transcription import transcribe_audio
 
 def load_environment_variables():
