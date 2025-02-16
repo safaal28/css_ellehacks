@@ -1,2 +1,2 @@
-*.env
+.env
 gcc_api_key.json
